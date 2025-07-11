@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // ======= Constants =======
-const mongoUrl = "mongodb+srv://root:root@lernolink.j30krfd.mongodb.net/?retryWrites=true&w=majority&appName=LernoLink";
+const mongoUrl = "";
 const JWT_SECRET = "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jdsds039[]]pou89ywe"; 
 
 // ======= Mongoose Models =======

@@ -1,7 +1,12 @@
-import axios from 'axios';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+import { LinearGradient } from 'expo-linear-gradient';
+
+import { Colors } from '../../constants/Colors';
 
 export default function StudentSignUp() {
   const [username, setUsername] = useState('');
@@ -10,32 +15,118 @@ export default function StudentSignUp() {
   const router = useRouter();
 
   const handleSignup = async () => {
-    try {
-      await axios.post('http://10.101.165.195/api/auth/register', {
-        username,
-        email,
-        password,
-        role: 'student'
-      });
-      router.push('/(auth)/StudentLogin');
-    } catch (err) {
-      alert('Error signing up');
-    }
+    // try {
+    //   await axios.post('http://10.101.165.195/api/auth/register', {
+    //     username,
+    //     email,
+    //     password,
+    //     role: 'student'
+    //   });
+      router.push('/StudentLogin');
+      ToastAndroid.show('Sign up successful! Please log in.', ToastAndroid.SHORT);
+    // } catch (err) {
+    //   alert('Error signing up');
+    // }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Student Sign Up</Text>
-      <TextInput placeholder="Username" style={styles.input} onChangeText={setUsername} />
-      <TextInput placeholder="Email" style={styles.input} onChangeText={setEmail} />
-      <TextInput placeholder="Password" style={styles.input} secureTextEntry onChangeText={setPassword} />
-      <Button title="Sign Up" onPress={handleSignup} />
+
+<View style={styles.action}>
+        <FontAwesome name="user-o" color="#420475" style={styles.smallIcon} />
+        <TextInput
+          style={styles.input}
+          placeholder="UserName"
+          placeholderTextColor="#888"
+          // value={userName}
+          onChangeText={setUsername}
+        />
+      </View>
+
+ <View style={styles.action}>
+        <FontAwesome name="envelope-o" color="#420475" style={styles.smallIcon} />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#888"
+          onChangeText={setEmail} 
+        />
+      </View>
+
+<View style={styles.action}>
+        <FontAwesome name="lock" color="#420475" style={styles.smallIcon} />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#888"
+          secureTextEntry
+          onChangeText={setPassword}
+        />
+      </View>
+
+      <TouchableOpacity
+              onPress={handleSignup}
+              activeOpacity={0.5}
+              style={{ borderRadius: 15, marginTop: 150, marginLeft: 10, width: 330, height: 55 }}
+            >
+              <LinearGradient
+                colors={Colors.GRADIENT_PRIMARY}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{
+                  flex: 1,
+                  borderRadius: 15,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    color: Colors.WHITE,
+                    fontFamily: 'outfit-medium',
+                    fontSize: 20,
+                    marginLeft: 10,
+                  }}
+                >
+                  Sign Up
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, marginTop: 50 },
-  title: { fontSize: 22, marginBottom: 20 },
-  input: { borderBottomWidth: 1, marginBottom: 10, padding: 8 }
+  container:
+  {
+    padding: 20,
+    marginTop: 0,
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 22,
+    marginTop: 250,
+    marginBottom: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  input: {
+    flex: 1,
+    height: 54,
+    paddingVertical: 0,
+    color: '#333',
+    fontSize: 16,
+  },
+  action: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 15,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 35,
+    paddingHorizontal: 10,
+  },
 });
